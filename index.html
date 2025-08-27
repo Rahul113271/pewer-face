@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .calculate {
+            background-color: #28a745;
+            color: white;
+        }
+        .clear {
+            background-color: #dc3545;
+            color: white;
+        }
+        #thrustOutput {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocket Data Syst3m</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <header>
+        <h1>Rocket Data Syst3m</h1>
+    </header>
+    <main>
+        <section id="data-panel">
+            <h2>Real-Time Data</h2>
+            <div id="data-display">
+                <p>Altitude: <span id="altitude">0</span> m</p>
+                <p>Temperature: <span id="temperature">0</span> °C</p>
+                <p>Latitude: <span id="latitude">0</span></p>
+                <p>Longitude: <span id="longitude">0</span></p>
+                <!-- Add more sensors as needed -->
+            </div>
+        </section>
 
+        <section id="map-panel">
+            <h2>Rocket Maps</h2>
+            <div id="map" style="height: 400px; width: 100%;"></div>
+        </section>
+
+        <section id="view-panel">
+            <h2>View Data</h2>
+            <button id="show-graph">Show Graph</button>
+            <button id="show-table">Show Table</button>
+            <div id="graph-container" style="display: none;">
+                <canvas id="data-graph"></canvas>
+            </div>
+            <div id="table-container" style="display: none;">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Altitude</th>
+                            <th>Temperature</th>
+                        </tr>   
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="control-panel">
+            <h2>Rocket Control</h2>
+            <label for="altitude-input">Set Target Altitude (m):</label>
+            <input type="number" id="altitude-input">
+            <label for="thrust-input">Set Thrust (N):</label>
+            <input type="number" id="thrust-input">
+            <button onclick="showMessage()">Send Controls</button>
+        </section>
+
+        <div class="container">
+            <h2>Rocket Thrust Calculator</h2>
+            <label>Mass Flow Rate (kg/s):</label>
+            <input type="number" id="massFlowRate" step="any">
+            
+            <label>Exhaust Velocity (m/s):</label>
+            <input type="number" id="exhaustVelocity" step="any">
+            
+            <label>Exit Area (m²):</label>
+            <input type="number" id="exitArea" step="any">
+            
+            <label>Exhaust Pressure (P<sub>e</sub>):</label>
+            <input type="number" id="exhaustPressure" step="any">
+            
+            <label>Ambient Pressure (P<sub>0</sub>):</label>
+            <input type="number" id="ambientPressure" step="any">
+            
+            <button class="calculate" onclick="calculateThrust()">Calculate Thrust</button>
+            <button class="clear" onclick="clearValues()">Clear Values</button>
+            
+            <h3 id="thrustOutput">Thrust: </h3>
+        </div>
+    </main>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</body>
+</html>
